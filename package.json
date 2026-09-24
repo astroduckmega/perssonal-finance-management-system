@@ -1,0 +1,14 @@
+{
+  "name": "personal-finance-management-system",
+  "version": "1.0.0",
+  "description": "Full Stack Personal Finance Management System with React, TailwindCSS, Express.js and MongoDB Atlas",
+  "scripts": {
+    "dev": "concurrently \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
+    "start:server": "npm run start --prefix server",
+    "start:client": "npm run dev --prefix client",
+    "build:client": "npm run build --prefix client"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.4"
+  }
+}
