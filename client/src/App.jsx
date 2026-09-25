@@ -57,15 +57,29 @@ const PublicRoute = ({ children }) => {
 
 function AppRoutes() {
   const [refreshTrigger, setRefreshTrigger] = useState(0);
+  const { isAuthenticated, loading } = useAuth();
 
   const triggerRefresh = () => {
     setRefreshTrigger((prev) => prev + 1);
   };
 
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#f5f5f5] flex flex-col items-center justify-center space-y-4">
+        <div className="w-12 h-12 rounded-full border-4 border-[#E8450A]/20 border-t-[#E8450A] animate-spin" />
+        <p className="text-xs font-semibold text-gray-500 tracking-wider uppercase">
+          Verifying Session...
+        </p>
+      </div>
+    );
+  }
+
   return (
     <Routes>
-      {/* Public Landing & Auth Routes */}
+      {/* Landing page */}
       <Route path="/home" element={<Home />} />
+
+      {/* Public Auth Routes */}
       <Route
         path="/login"
         element={
@@ -83,21 +97,58 @@ function AppRoutes() {
         }
       />
 
-      {/* Protected App Routes */}
+      {/* Main Root Route: Shows Home landing page if unauthenticated, Dashboard inside AppLayout if authenticated */}
       <Route
         path="/"
         element={
-          <ProtectedRoute>
+          isAuthenticated ? (
             <AppLayout refreshTrigger={refreshTrigger} triggerRefresh={triggerRefresh} />
-          </ProtectedRoute>
+          ) : (
+            <Home />
+          )
         }
       >
         <Route index element={<Dashboard />} />
-        <Route path="transactions" element={<Transactions />} />
-        <Route path="budgets" element={<Budgets />} />
-        <Route path="goals" element={<Goals />} />
-        <Route path="reports" element={<Reports />} />
-        <Route path="profile" element={<Profile />} />
+        <Route
+          path="transactions"
+          element={
+            <ProtectedRoute>
+              <Transactions />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="budgets"
+          element={
+            <ProtectedRoute>
+              <Budgets />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="goals"
+          element={
+            <ProtectedRoute>
+              <Goals />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="reports"
+          element={
+            <ProtectedRoute>
+              <Reports />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
       </Route>
 
       {/* Catch-all redirect */}
