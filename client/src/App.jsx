@@ -13,16 +13,16 @@ import Reports from './pages/Reports/Reports';
 import Profile from './pages/Profile/Profile';
 import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
-
+import Home from './pages/Home/Home';
 // Protected Route Guard
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#090d16] flex flex-col items-center justify-center space-y-4">
-        <div className="w-12 h-12 rounded-full border-4 border-brand-500/20 border-t-brand-500 animate-spin" />
-        <p className="text-xs font-semibold text-slate-400 tracking-wider uppercase">
+      <div className="min-h-screen bg-[#f5f5f5] flex flex-col items-center justify-center space-y-4">
+        <div className="w-12 h-12 rounded-full border-4 border-[#E8450A]/20 border-t-[#E8450A] animate-spin" />
+        <p className="text-xs font-semibold text-gray-500 tracking-wider uppercase">
           Verifying Session...
         </p>
       </div>
@@ -42,8 +42,8 @@ const PublicRoute = ({ children }) => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#090d16] flex flex-col items-center justify-center space-y-4">
-        <div className="w-12 h-12 rounded-full border-4 border-brand-500/20 border-t-brand-500 animate-spin" />
+      <div className="min-h-screen bg-[#f5f5f5] flex flex-col items-center justify-center space-y-4">
+        <div className="w-12 h-12 rounded-full border-4 border-[#E8450A]/20 border-t-[#E8450A] animate-spin" />
       </div>
     );
   }
@@ -64,7 +64,8 @@ function AppRoutes() {
 
   return (
     <Routes>
-      {/* Public Routes */}
+      {/* Public Landing & Auth Routes */}
+      <Route path="/home" element={<Home />} />
       <Route
         path="/login"
         element={

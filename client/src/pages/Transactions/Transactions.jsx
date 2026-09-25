@@ -47,7 +47,6 @@ export default function Transactions() {
 
   // Edit modal state
   const [editTx, setEditTx] = useState(null);
-  const [deleteId, setDeleteId] = useState(null);
 
   const fetchTransactions = async () => {
     try {
@@ -142,8 +141,8 @@ export default function Transactions() {
       {/* Header & Quick Action Bar */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-black text-white tracking-tight">Transactions Ledger</h1>
-          <p className="text-xs text-slate-400">
+          <h1 className="text-2xl font-bold text-gray-900 tracking-tight">Transactions Ledger</h1>
+          <p className="text-xs text-gray-500">
             View, filter, manage, and export all recorded income and expenses.
           </p>
         </div>
@@ -152,14 +151,14 @@ export default function Transactions() {
           <button
             onClick={handleExportCSV}
             disabled={transactions.length === 0}
-            className="flex-1 sm:flex-initial flex items-center justify-center space-x-1.5 px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-200 border border-slate-700 transition-colors disabled:opacity-50"
+            className="flex-1 sm:flex-initial flex items-center justify-center space-x-1.5 px-4 py-2.5 rounded-xl bg-gray-100 hover:bg-gray-200 text-xs font-bold text-gray-700 transition-colors disabled:opacity-50"
           >
             <Download className="w-4 h-4" />
             <span>Export CSV</span>
           </button>
           <button
             onClick={onOpenAddTransaction}
-            className="flex-1 sm:flex-initial flex items-center justify-center space-x-1.5 px-4 py-2.5 rounded-xl bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-xs font-bold text-white shadow-glow transition-all active:scale-95"
+            className="flex-1 sm:flex-initial flex items-center justify-center space-x-1.5 px-4 py-2.5 rounded-xl bg-[#E8450A] hover:bg-[#d03d08] text-xs font-bold text-white shadow-sm transition-all active:scale-95"
           >
             <Plus className="w-4 h-4" />
             <span>New Transaction</span>
@@ -168,36 +167,36 @@ export default function Transactions() {
       </div>
 
       {/* Filtered Financial Summary Strip */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-4 rounded-2xl glass-panel border border-slate-800">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-4 rounded-2xl bg-white border border-gray-100 shadow-sm">
         <div className="flex items-center space-x-3">
-          <div className="p-2.5 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-400">
+          <div className="p-2.5 rounded-xl bg-emerald-50 border border-emerald-100 text-emerald-600">
             <TrendingUp className="w-5 h-5" />
           </div>
           <div>
-            <div className="text-[11px] font-semibold text-slate-400 uppercase">Filtered Income</div>
-            <div className="text-lg font-bold text-emerald-400">{formatCurrency(summary.totalIncome)}</div>
+            <div className="text-[11px] font-semibold text-gray-400 uppercase">Filtered Income</div>
+            <div className="text-lg font-bold text-emerald-600">{formatCurrency(summary.totalIncome)}</div>
           </div>
         </div>
 
-        <div className="flex items-center space-x-3 sm:border-l sm:border-slate-800 sm:pl-4">
-          <div className="p-2.5 rounded-xl bg-rose-500/15 border border-rose-500/30 text-rose-400">
+        <div className="flex items-center space-x-3 sm:border-l sm:border-gray-100 sm:pl-4">
+          <div className="p-2.5 rounded-xl bg-red-50 border border-red-100 text-red-600">
             <TrendingDown className="w-5 h-5" />
           </div>
           <div>
-            <div className="text-[11px] font-semibold text-slate-400 uppercase">Filtered Expenses</div>
-            <div className="text-lg font-bold text-rose-400">{formatCurrency(summary.totalExpense)}</div>
+            <div className="text-[11px] font-semibold text-gray-400 uppercase">Filtered Expenses</div>
+            <div className="text-lg font-bold text-red-600">{formatCurrency(summary.totalExpense)}</div>
           </div>
         </div>
 
-        <div className="flex items-center space-x-3 sm:border-l sm:border-slate-800 sm:pl-4">
-          <div className="p-2.5 rounded-xl bg-brand-500/15 border border-brand-500/30 text-brand-400">
+        <div className="flex items-center space-x-3 sm:border-l sm:border-gray-100 sm:pl-4">
+          <div className="p-2.5 rounded-xl bg-orange-50 border border-orange-100 text-[#E8450A]">
             <ArrowUpDown className="w-5 h-5" />
           </div>
           <div>
-            <div className="text-[11px] font-semibold text-slate-400 uppercase">Net Difference</div>
+            <div className="text-[11px] font-semibold text-gray-400 uppercase">Net Difference</div>
             <div
               className={`text-lg font-bold ${
-                summary.netBalance >= 0 ? 'text-white' : 'text-rose-400'
+                summary.netBalance >= 0 ? 'text-gray-900' : 'text-red-600'
               }`}
             >
               {formatCurrency(summary.netBalance, { showSign: true })}
@@ -207,22 +206,22 @@ export default function Transactions() {
       </div>
 
       {/* Advanced Filters Bar */}
-      <div className="glass-panel rounded-2xl p-4 border border-slate-800 space-y-3">
+      <div className="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm space-y-3">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
           {/* Search Box */}
           <form onSubmit={handleSearchSubmit} className="relative lg:col-span-2">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               placeholder="Search by title, notes, tag..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full glass-input rounded-xl pl-9 pr-4 py-2 text-xs text-white placeholder-slate-500"
+              className="w-full bg-gray-50 border border-gray-200 rounded-xl pl-9 pr-4 py-2 text-xs text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#E8450A]"
             />
           </form>
 
           {/* Type Toggle Tabs */}
-          <div className="flex p-1 bg-slate-900 rounded-xl border border-slate-800">
+          <div className="flex p-1 bg-gray-100 rounded-xl border border-gray-200">
             {['all', 'expense', 'income'].map((t) => (
               <button
                 key={t}
@@ -233,11 +232,11 @@ export default function Transactions() {
                 className={`flex-1 py-1 rounded-lg text-xs font-bold capitalize transition-colors ${
                   type === t
                     ? t === 'income'
-                      ? 'bg-emerald-600 text-white shadow-sm'
+                      ? 'bg-emerald-500 text-white shadow-xs'
                       : t === 'expense'
-                      ? 'bg-rose-600 text-white shadow-sm'
-                      : 'bg-brand-600 text-white shadow-sm'
-                    : 'text-slate-400 hover:text-white'
+                      ? 'bg-red-500 text-white shadow-xs'
+                      : 'bg-[#E8450A] text-white shadow-xs'
+                    : 'text-gray-600 hover:text-gray-900'
                 }`}
               >
                 {t}
@@ -253,13 +252,11 @@ export default function Transactions() {
                 setCategory(e.target.value);
                 setCurrentPage(1);
               }}
-              className="w-full glass-input rounded-xl px-3 py-2 text-xs text-white bg-slate-900"
+              className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs text-gray-900 focus:outline-none focus:border-[#E8450A]"
             >
-              <option value="all" className="bg-slate-900 text-white">
-                All Categories
-              </option>
+              <option value="all">All Categories</option>
               {allCategories.map((c) => (
-                <option key={c} value={c} className="bg-slate-900 text-white">
+                <option key={c} value={c}>
                   {c}
                 </option>
               ))}
@@ -274,13 +271,11 @@ export default function Transactions() {
                 setPaymentMethod(e.target.value);
                 setCurrentPage(1);
               }}
-              className="w-full glass-input rounded-xl px-3 py-2 text-xs text-white bg-slate-900"
+              className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs text-gray-900 focus:outline-none focus:border-[#E8450A]"
             >
-              <option value="all" className="bg-slate-900 text-white">
-                All Payment Methods
-              </option>
+              <option value="all">All Payment Methods</option>
               {PAYMENT_METHODS.map((m) => (
-                <option key={m} value={m} className="bg-slate-900 text-white">
+                <option key={m} value={m}>
                   {m}
                 </option>
               ))}
@@ -289,10 +284,10 @@ export default function Transactions() {
         </div>
 
         {/* Date Range & Reset */}
-        <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-800/60 text-xs">
+        <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-gray-100 text-xs">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-slate-400 flex items-center">
-              <Calendar className="w-3.5 h-3.5 mr-1 text-brand-400" /> Range:
+            <span className="text-gray-500 flex items-center">
+              <Calendar className="w-3.5 h-3.5 mr-1 text-[#E8450A]" /> Range:
             </span>
             <input
               type="date"
@@ -301,9 +296,9 @@ export default function Transactions() {
                 setStartDate(e.target.value);
                 setCurrentPage(1);
               }}
-              className="glass-input rounded-lg px-2.5 py-1 text-xs text-white"
+              className="bg-gray-50 border border-gray-200 rounded-lg px-2.5 py-1 text-xs text-gray-800 focus:outline-none focus:border-[#E8450A]"
             />
-            <span className="text-slate-500">to</span>
+            <span className="text-gray-400">to</span>
             <input
               type="date"
               value={endDate}
@@ -311,14 +306,14 @@ export default function Transactions() {
                 setEndDate(e.target.value);
                 setCurrentPage(1);
               }}
-              className="glass-input rounded-lg px-2.5 py-1 text-xs text-white"
+              className="bg-gray-50 border border-gray-200 rounded-lg px-2.5 py-1 text-xs text-gray-800 focus:outline-none focus:border-[#E8450A]"
             />
           </div>
 
           {(search || type !== 'all' || category !== 'all' || paymentMethod !== 'all' || startDate || endDate) && (
             <button
               onClick={handleResetFilters}
-              className="flex items-center space-x-1 text-rose-400 hover:text-rose-300 font-semibold"
+              className="flex items-center space-x-1 text-red-500 hover:text-red-700 font-semibold"
             >
               <X className="w-3.5 h-3.5" />
               <span>Reset Filters</span>
@@ -328,20 +323,20 @@ export default function Transactions() {
       </div>
 
       {/* Transactions Table */}
-      <div className="glass-panel rounded-3xl border border-slate-800 overflow-hidden shadow-2xl">
+      <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
         {loading ? (
-          <div className="p-12 text-center text-xs font-semibold text-slate-400 animate-pulse">
+          <div className="p-12 text-center text-xs font-semibold text-gray-400 animate-pulse">
             Loading transactions...
           </div>
         ) : transactions.length === 0 ? (
-          <div className="p-12 text-center text-slate-400">
-            <p className="text-sm font-bold text-white mb-1">No transactions found</p>
-            <p className="text-xs text-slate-400 mb-4">
+          <div className="p-12 text-center text-gray-500">
+            <p className="text-sm font-bold text-gray-900 mb-1">No transactions found</p>
+            <p className="text-xs text-gray-400 mb-4">
               Try adjusting your filters or record a new transaction.
             </p>
             <button
               onClick={onOpenAddTransaction}
-              className="px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-500 text-xs font-bold text-white shadow-glow transition-all"
+              className="px-4 py-2 rounded-xl bg-[#E8450A] hover:bg-[#d03d08] text-xs font-bold text-white shadow-sm transition-all"
             >
               Add First Transaction
             </button>
@@ -350,53 +345,53 @@ export default function Transactions() {
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="border-b border-slate-800 bg-slate-900/80 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
-                  <th className="py-3.5 px-4 sm:px-6">Transaction</th>
-                  <th className="py-3.5 px-4">Category</th>
-                  <th className="py-3.5 px-4">Payment Method</th>
-                  <th className="py-3.5 px-4">Date</th>
-                  <th className="py-3.5 px-4 text-right">Amount</th>
-                  <th className="py-3.5 px-4 sm:px-6 text-right">Actions</th>
+                <tr className="border-b border-gray-100 bg-gray-50 text-[11px] font-bold text-gray-400 uppercase tracking-wider">
+                  <th className="py-3 px-4 sm:px-6">Transaction</th>
+                  <th className="py-3 px-4">Category</th>
+                  <th className="py-3 px-4">Payment Method</th>
+                  <th className="py-3 px-4">Date</th>
+                  <th className="py-3 px-4 text-right">Amount</th>
+                  <th className="py-3 px-4 sm:px-6 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/60 text-xs text-slate-300">
+              <tbody className="divide-y divide-gray-100 text-xs text-gray-700">
                 {transactions.map((tx) => (
-                  <tr key={tx._id} className="hover:bg-slate-800/30 transition-colors">
+                  <tr key={tx._id} className="hover:bg-gray-50 transition-colors">
                     {/* Title + Notes */}
-                    <td className="py-3 px-4 sm:px-6">
+                    <td className="py-3.5 px-4 sm:px-6">
                       <div className="flex items-center space-x-3">
                         <CategoryIcon category={tx.category} type={tx.type} size="sm" />
                         <div>
-                          <span className="font-bold text-white text-xs sm:text-sm">{tx.title}</span>
+                          <span className="font-bold text-gray-900 text-xs sm:text-sm">{tx.title}</span>
                           {tx.notes && (
-                            <p className="text-[11px] text-slate-400 truncate max-w-xs">{tx.notes}</p>
+                            <p className="text-[11px] text-gray-400 truncate max-w-xs">{tx.notes}</p>
                           )}
                         </div>
                       </div>
                     </td>
 
                     {/* Category */}
-                    <td className="py-3 px-4">
-                      <span className="font-medium text-slate-300">{tx.category}</span>
+                    <td className="py-3.5 px-4">
+                      <span className="font-medium text-gray-600">{tx.category}</span>
                     </td>
 
                     {/* Payment Method */}
-                    <td className="py-3 px-4">
-                      <span className="bg-slate-800/90 text-slate-300 border border-slate-700/60 px-2 py-0.5 rounded-lg text-[11px] font-medium">
+                    <td className="py-3.5 px-4">
+                      <span className="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-lg text-[11px] font-medium">
                         {tx.paymentMethod}
                       </span>
                     </td>
 
                     {/* Date */}
-                    <td className="py-3 px-4 text-slate-400">
+                    <td className="py-3.5 px-4 text-gray-400">
                       {format(new Date(tx.date), 'MMM dd, yyyy')}
                     </td>
 
                     {/* Amount */}
-                    <td className="py-3 px-4 text-right">
+                    <td className="py-3.5 px-4 text-right">
                       <span
-                        className={`font-black text-xs sm:text-sm ${
-                          tx.type === 'income' ? 'text-emerald-400' : 'text-slate-100'
+                        className={`font-bold text-xs sm:text-sm ${
+                          tx.type === 'income' ? 'text-emerald-600' : 'text-gray-900'
                         }`}
                       >
                         {tx.type === 'income' ? '+' : '-'}
@@ -405,18 +400,18 @@ export default function Transactions() {
                     </td>
 
                     {/* Action buttons */}
-                    <td className="py-3 px-4 sm:px-6 text-right">
-                      <div className="flex items-center justify-end space-x-2">
+                    <td className="py-3.5 px-4 sm:px-6 text-right">
+                      <div className="flex items-center justify-end space-x-1">
                         <button
                           onClick={() => setEditTx(tx)}
-                          className="p-1.5 rounded-lg text-slate-400 hover:text-brand-400 hover:bg-slate-800 transition-colors"
+                          className="p-1.5 rounded-lg text-gray-400 hover:text-[#E8450A] hover:bg-orange-50 transition-colors"
                           title="Edit"
                         >
                           <Edit2 className="w-3.5 h-3.5" />
                         </button>
                         <button
                           onClick={() => handleDelete(tx._id)}
-                          className="p-1.5 rounded-lg text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"
+                          className="p-1.5 rounded-lg text-gray-400 hover:text-red-600 hover:bg-red-50 transition-colors"
                           title="Delete"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
@@ -432,23 +427,23 @@ export default function Transactions() {
 
         {/* Pagination Bar */}
         {totalPages > 1 && (
-          <div className="p-4 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+          <div className="p-4 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
             <div>
-              Showing page <strong className="text-white">{currentPage}</strong> of{' '}
-              <strong className="text-white">{totalPages}</strong> ({totalCount} items)
+              Showing page <strong className="text-gray-900">{currentPage}</strong> of{' '}
+              <strong className="text-gray-900">{totalPages}</strong> ({totalCount} items)
             </div>
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-1">
               <button
                 disabled={currentPage === 1}
                 onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-white disabled:opacity-40 transition-colors"
+                className="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 disabled:opacity-40 transition-colors"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
               <button
                 disabled={currentPage === totalPages}
                 onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-                className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-white disabled:opacity-40 transition-colors"
+                className="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 disabled:opacity-40 transition-colors"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>

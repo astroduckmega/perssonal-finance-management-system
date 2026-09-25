@@ -34,14 +34,14 @@ export default function Sidebar({ mobileOpen, onCloseMobile, collapsed = false, 
       {/* Mobile Backdrop */}
       {mobileOpen && (
         <div
-          className="fixed inset-0 bg-black/80 backdrop-blur-sm z-40 lg:hidden animate-fade-in"
+          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 lg:hidden animate-fade-in"
           onClick={onCloseMobile}
         />
       )}
 
       {/* Sidebar Container */}
       <aside
-        className={`fixed top-0 bottom-0 left-0 z-50 bg-slate-900/95 lg:bg-slate-900/80 backdrop-blur-2xl border-r border-slate-800/80 flex flex-col justify-between transition-all duration-300 ease-in-out ${
+        className={`fixed top-0 bottom-0 left-0 z-50 bg-white border-r border-gray-100 flex flex-col justify-between transition-all duration-300 ease-in-out shadow-sm ${
           collapsed ? 'w-64 lg:w-20' : 'w-64 lg:w-64'
         } ${
           mobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
@@ -49,20 +49,20 @@ export default function Sidebar({ mobileOpen, onCloseMobile, collapsed = false, 
       >
         {/* Top Header & Logo */}
         <div>
-          <div className={`h-16 lg:h-20 flex items-center border-b border-slate-800/80 transition-all duration-300 ${
+          <div className={`h-16 lg:h-20 flex items-center border-b border-gray-100 transition-all duration-300 ${
             collapsed ? 'justify-center px-2' : 'justify-between px-5'
           }`}>
             <div className="flex items-center space-x-3 overflow-hidden">
-              <div className="w-10 h-10 min-w-10 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-500 flex items-center justify-center shadow-glow">
+              <div className="w-10 h-10 min-w-10 rounded-xl bg-[#E8450A] flex items-center justify-center shadow-sm">
                 <Wallet className="w-5 h-5 text-white" />
               </div>
               {!collapsed && (
                 <div className="transition-opacity duration-200 whitespace-nowrap">
-                  <span className="text-xl font-black text-white tracking-tight">
-                    Fin<span className="text-brand-400">Vibe</span>
+                  <span className="text-xl font-extrabold text-gray-900 tracking-tight">
+                    Fin<span className="text-[#E8450A]">Vibe</span>
                   </span>
-                  <span className="block text-[10px] font-semibold text-slate-400 uppercase tracking-widest">
-                    Atlas Edition
+                  <span className="block text-[10px] font-semibold text-gray-400 uppercase tracking-widest">
+                    Finance Hub
                   </span>
                 </div>
               )}
@@ -72,7 +72,7 @@ export default function Sidebar({ mobileOpen, onCloseMobile, collapsed = false, 
             {onToggleCollapse && (
               <button
                 onClick={onToggleCollapse}
-                className="hidden lg:flex p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+                className="hidden lg:flex p-1.5 rounded-lg text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors"
                 title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
               >
                 {collapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
@@ -82,7 +82,7 @@ export default function Sidebar({ mobileOpen, onCloseMobile, collapsed = false, 
             {/* Mobile close button */}
             <button
               onClick={onCloseMobile}
-              className="lg:hidden p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+              className="lg:hidden p-1.5 rounded-lg text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
@@ -91,7 +91,7 @@ export default function Sidebar({ mobileOpen, onCloseMobile, collapsed = false, 
           {/* Navigation Links */}
           <nav className="p-3 space-y-1.5">
             {!collapsed && (
-              <div className="px-3 py-2 text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+              <div className="px-3 py-2 text-[11px] font-bold text-gray-400 uppercase tracking-wider">
                 Main Menu
               </div>
             )}
@@ -109,13 +109,21 @@ export default function Sidebar({ mobileOpen, onCloseMobile, collapsed = false, 
                       collapsed ? 'justify-center p-3' : 'space-x-3 px-3.5 py-3'
                     } ${
                       isActive
-                        ? 'bg-gradient-to-r from-brand-600/30 to-brand-600/10 text-brand-300 border border-brand-500/40 shadow-glow font-bold'
-                        : 'text-slate-400 hover:text-slate-100 hover:bg-slate-800/60'
+                        ? 'bg-[#E8450A] text-white shadow-sm font-bold'
+                        : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50'
                     }`
                   }
                 >
-                  <Icon className="w-5 h-5 min-w-5 transition-transform duration-200 group-hover:scale-110" />
-                  {!collapsed && <span className="truncate">{item.name}</span>}
+                  {({ isActive }) => (
+                    <>
+                      <Icon
+                        className={`w-5 h-5 min-w-5 transition-transform duration-200 group-hover:scale-110 ${
+                          isActive ? 'text-white' : 'text-gray-400 group-hover:text-gray-600'
+                        }`}
+                      />
+                      {!collapsed && <span className="truncate">{item.name}</span>}
+                    </>
+                  )}
                 </NavLink>
               );
             })}
@@ -126,13 +134,13 @@ export default function Sidebar({ mobileOpen, onCloseMobile, collapsed = false, 
         <div className="p-3 space-y-3">
           {/* Financial Tip Widget */}
           {!collapsed && (
-            <div className="glass-panel p-4 rounded-2xl border border-brand-500/20 bg-gradient-to-br from-brand-950/40 to-slate-900/60 transition-all duration-200">
-              <div className="flex items-center space-x-2 text-brand-400 mb-1.5">
+            <div className="p-4 rounded-2xl border border-orange-100 bg-orange-50/70 transition-all duration-200">
+              <div className="flex items-center space-x-2 text-[#E8450A] mb-1.5">
                 <Sparkles className="w-4 h-4" />
                 <span className="text-xs font-bold uppercase tracking-wider">Smart Tip</span>
               </div>
-              <p className="text-xs text-slate-300 leading-relaxed">
-                Aim to follow the <strong className="text-brand-300">50/30/20 rule</strong>: 50% for needs, 30% wants, 20% savings & investments.
+              <p className="text-xs text-gray-600 leading-relaxed">
+                Follow the <strong className="text-[#E8450A] font-semibold">50/30/20 rule</strong>: 50% needs, 30% wants, 20% savings & investments.
               </p>
             </div>
           )}
@@ -144,7 +152,7 @@ export default function Sidebar({ mobileOpen, onCloseMobile, collapsed = false, 
               navigate('/login');
             }}
             title={collapsed ? 'Sign Out' : undefined}
-            className={`w-full flex items-center py-2.5 rounded-xl text-xs font-bold text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 border border-transparent hover:border-rose-500/20 transition-all duration-200 ${
+            className={`w-full flex items-center py-2.5 rounded-xl text-xs font-bold text-gray-500 hover:text-red-600 hover:bg-red-50 border border-transparent hover:border-red-100 transition-all duration-200 ${
               collapsed ? 'justify-center px-2' : 'justify-center space-x-2 px-3'
             }`}
           >

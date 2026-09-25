@@ -10,7 +10,7 @@ export default function AppLayout({ refreshTrigger, triggerRefresh }) {
   const [addTransactionOpen, setAddTransactionOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-[#090d16] flex">
+    <div className="min-h-screen bg-[#f5f5f5] flex text-gray-900">
       {/* Sidebar Navigation */}
       <Sidebar
         mobileOpen={mobileSidebarOpen}

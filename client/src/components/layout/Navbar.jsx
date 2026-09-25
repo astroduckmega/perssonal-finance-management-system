@@ -59,27 +59,27 @@ export default function Navbar({
   };
 
   return (
-    <header className="h-16 lg:h-20 bg-slate-900/60 backdrop-blur-xl border-b border-slate-800/80 sticky top-0 z-30 px-4 lg:px-8 flex items-center justify-between">
+    <header className="h-16 lg:h-20 bg-white border-b border-gray-100 sticky top-0 z-30 px-4 lg:px-8 flex items-center justify-between shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
       {/* Left Greeting & Mobile/Desktop Sidebar Toggle */}
       <div className="flex items-center space-x-3 lg:space-x-4">
         <button
           onClick={handleToggleMenu}
-          className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 focus:outline-none transition-colors"
+          className="p-2 rounded-xl text-gray-400 hover:text-gray-700 hover:bg-gray-100 focus:outline-none transition-colors"
           title={sidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
         >
           <Menu className="w-5 h-5 sm:w-6 sm:h-6" />
         </button>
 
         <div>
-          <h1 className="text-base sm:text-lg lg:text-xl font-extrabold text-white tracking-tight flex items-center">
+          <h1 className="text-base sm:text-lg lg:text-xl font-bold text-gray-900 tracking-tight flex items-center">
             {getGreeting()},{' '}
-            <span className="gradient-text ml-1.5 font-black">
+            <span className="text-[#E8450A] ml-1.5 font-bold">
               {user?.name?.split(' ')[0] || 'Member'}
             </span>
-            <span className="hidden sm:inline-block ml-2 text-sm font-normal text-slate-400">👋</span>
+            <span className="hidden sm:inline-block ml-2 text-sm font-normal text-gray-400">👋</span>
           </h1>
-          <p className="text-xs text-slate-400 hidden sm:block">
-            Track expenses, manage budgets, and build your wealth.
+          <p className="text-xs text-gray-500 hidden sm:block">
+            Stay on top of your finances, track spending, and build wealth.
           </p>
         </div>
       </div>
@@ -92,17 +92,17 @@ export default function Navbar({
           disabled={seeding}
           className={`flex items-center space-x-1.5 px-3 py-2 rounded-xl text-xs font-semibold border transition-all duration-200 ${
             seedSuccess
-              ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
-              : 'bg-slate-800/80 text-amber-300 border-amber-500/30 hover:bg-amber-500/10 hover:border-amber-500/50'
+              ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+              : 'bg-orange-50 text-[#E8450A] border-orange-200 hover:bg-orange-100'
           }`}
           title="Populate your dashboard with realistic demo transactions & budgets"
         >
           {seeding ? (
-            <RefreshCw className="w-3.5 h-3.5 animate-spin text-amber-400" />
+            <RefreshCw className="w-3.5 h-3.5 animate-spin text-[#E8450A]" />
           ) : seedSuccess ? (
-            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
           ) : (
-            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+            <Sparkles className="w-3.5 h-3.5 text-[#E8450A]" />
           )}
           <span className="hidden md:inline">{seedSuccess ? 'Demo Loaded!' : 'Seed Demo Data'}</span>
         </button>
@@ -114,16 +114,16 @@ export default function Navbar({
               setCurrencyOpen(!currencyOpen);
               setProfileOpen(false);
             }}
-            className="flex items-center space-x-1 px-3 py-2 rounded-xl text-xs font-semibold bg-slate-800/80 text-slate-200 border border-slate-700/70 hover:bg-slate-700/60 transition-colors"
+            className="flex items-center space-x-1.5 px-3 py-2 rounded-xl text-xs font-semibold bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
           >
-            <DollarSign className="w-3.5 h-3.5 text-brand-400" />
+            <DollarSign className="w-3.5 h-3.5 text-[#E8450A]" />
             <span>{currency}</span>
-            <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
+            <ChevronDown className="w-3.5 h-3.5 text-gray-400" />
           </button>
 
           {currencyOpen && (
-            <div className="absolute right-0 mt-2 w-48 glass-panel rounded-xl shadow-2xl border border-slate-700 py-1 z-50 animate-slide-up">
-              <div className="px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-800">
+            <div className="absolute right-0 mt-2 w-48 bg-white rounded-2xl shadow-xl border border-gray-100 py-1.5 z-50 animate-slide-up">
+              <div className="px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-wider text-gray-400 border-b border-gray-100">
                 Select Currency
               </div>
               {Object.keys(CURRENCIES).map((code) => (
@@ -133,14 +133,14 @@ export default function Navbar({
                     setCurrency(code);
                     setCurrencyOpen(false);
                   }}
-                  className={`w-full text-left px-3 py-2 text-xs flex items-center justify-between transition-colors ${
+                  className={`w-full text-left px-3.5 py-2 text-xs flex items-center justify-between transition-colors ${
                     currency === code
-                      ? 'bg-brand-600/20 text-brand-300 font-bold'
-                      : 'text-slate-300 hover:bg-slate-800/80 hover:text-white'
+                      ? 'bg-orange-50 text-[#E8450A] font-bold'
+                      : 'text-gray-700 hover:bg-gray-50'
                   }`}
                 >
                   <span>{CURRENCIES[code].label}</span>
-                  {currency === code && <span className="text-brand-400 text-xs">✓</span>}
+                  {currency === code && <span className="text-[#E8450A] text-xs font-bold">✓</span>}
                 </button>
               ))}
             </div>
@@ -150,7 +150,7 @@ export default function Navbar({
         {/* Quick Add Transaction Button */}
         <button
           onClick={onOpenAddTransaction}
-          className="flex items-center space-x-1.5 bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white text-xs sm:text-sm font-bold px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-xl shadow-glow transition-all duration-200 active:scale-95"
+          className="flex items-center space-x-1.5 bg-[#E8450A] hover:bg-[#d03d08] text-white text-xs sm:text-sm font-bold px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-xl shadow-sm transition-all duration-200 active:scale-95"
         >
           <Plus className="w-4 h-4" />
           <span className="hidden sm:inline">Add Transaction</span>
@@ -164,24 +164,24 @@ export default function Navbar({
               setProfileOpen(!profileOpen);
               setCurrencyOpen(false);
             }}
-            className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-emerald-500 flex items-center justify-center text-white font-black text-sm shadow-md border border-white/20 hover:scale-105 transition-transform"
+            className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gray-900 text-white flex items-center justify-center font-bold text-sm shadow-sm hover:scale-105 transition-transform"
           >
             {user?.name ? user.name.charAt(0).toUpperCase() : 'U'}
           </button>
 
           {profileOpen && (
-            <div className="absolute right-0 mt-2 w-52 glass-panel rounded-xl shadow-2xl border border-slate-700 py-1.5 z-50 animate-slide-up">
-              <div className="px-3.5 py-2 border-b border-slate-800">
-                <p className="text-xs font-bold text-white truncate">{user?.name}</p>
-                <p className="text-[11px] text-slate-400 truncate">{user?.email}</p>
+            <div className="absolute right-0 mt-2 w-52 bg-white rounded-2xl shadow-xl border border-gray-100 py-1.5 z-50 animate-slide-up">
+              <div className="px-4 py-2.5 border-b border-gray-100">
+                <p className="text-xs font-bold text-gray-900 truncate">{user?.name}</p>
+                <p className="text-[11px] text-gray-400 truncate">{user?.email}</p>
               </div>
 
               <Link
                 to="/profile"
                 onClick={() => setProfileOpen(false)}
-                className="flex items-center space-x-2 px-3.5 py-2 text-xs text-slate-300 hover:bg-slate-800 hover:text-white transition-colors"
+                className="flex items-center space-x-2 px-4 py-2.5 text-xs text-gray-700 hover:bg-gray-50 transition-colors"
               >
-                <User className="w-4 h-4 text-brand-400" />
+                <User className="w-4 h-4 text-[#E8450A]" />
                 <span>Account Settings</span>
               </Link>
 
@@ -190,7 +190,7 @@ export default function Navbar({
                   setProfileOpen(false);
                   logout();
                 }}
-                className="w-full flex items-center space-x-2 px-3.5 py-2 text-xs text-rose-400 hover:bg-rose-500/10 transition-colors border-t border-slate-800/80 mt-1"
+                className="w-full flex items-center space-x-2 px-4 py-2.5 text-xs text-red-600 hover:bg-red-50 transition-colors border-t border-gray-100 mt-1"
               >
                 <LogOut className="w-4 h-4" />
                 <span>Sign Out</span>

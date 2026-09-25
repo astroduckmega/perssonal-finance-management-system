@@ -35,11 +35,9 @@ export default function Login() {
     const demoPassword = 'password123';
 
     try {
-      // Try login first
       try {
         await login(demoEmail, demoPassword);
       } catch (loginErr) {
-        // If demo user doesn't exist, create it and seed
         await register('Demo User', demoEmail, demoPassword, 'INR');
         await seedDemoData(false);
       }
@@ -52,32 +50,28 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-[#090d16]">
-      {/* Background Neon Blurs */}
-      <div className="absolute -top-40 -left-40 w-96 h-96 bg-brand-600/20 rounded-full blur-[128px] pointer-events-none" />
-      <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-emerald-600/15 rounded-full blur-[128px] pointer-events-none" />
-
-      <div className="w-full max-w-md relative z-10">
+    <div className="min-h-screen flex items-center justify-center p-4 bg-[#f5f5f5]">
+      <div className="w-full max-w-md">
         {/* Logo and Tagline */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-tr from-brand-600 to-indigo-600 shadow-glow mb-4">
-            <Wallet className="w-7 h-7 text-white" />
-          </div>
-          <h1 className="text-3xl font-black text-white tracking-tight">
-            Fin<span className="text-brand-400">Vibe</span>
+          <Link to="/" className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-[#E8450A] shadow-sm mb-3">
+            <Wallet className="w-6 h-6 text-white" />
+          </Link>
+          <h1 className="text-2xl font-bold text-gray-900 tracking-tight">
+            Fin<span className="text-[#E8450A]">Vibe</span>
           </h1>
-          <p className="text-sm text-slate-400 mt-1.5">
-            Personal Finance Intelligence powered by MongoDB Atlas
+          <p className="text-xs text-gray-500 mt-1">
+            Intelligent Personal Finance Tracker
           </p>
         </div>
 
         {/* Card */}
-        <div className="glass-panel rounded-3xl p-6 sm:p-8 border border-slate-700/70 shadow-2xl">
-          <h2 className="text-xl font-extrabold text-white mb-1">Welcome back</h2>
-          <p className="text-xs text-slate-400 mb-6">Enter your credentials to access your dashboard</p>
+        <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-100 shadow-sm">
+          <h2 className="text-xl font-bold text-gray-900 mb-1">Welcome back</h2>
+          <p className="text-xs text-gray-400 mb-6">Enter your credentials to access your dashboard</p>
 
           {error && (
-            <div className="p-3 mb-5 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs flex items-center space-x-2">
+            <div className="p-3 mb-5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-center space-x-2">
               <ShieldAlert className="w-4 h-4 shrink-0" />
               <span>{error}</span>
             </div>
@@ -85,31 +79,31 @@ export default function Login() {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-xs font-bold text-slate-300 mb-1.5">Email Address</label>
+              <label className="block text-xs font-bold text-gray-700 mb-1.5">Email Address</label>
               <div className="relative">
-                <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                <Mail className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                 <input
                   type="email"
                   required
                   placeholder="name@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full glass-input rounded-xl pl-10 pr-4 py-2.5 text-xs text-white placeholder-slate-600"
+                  className="w-full bg-white border border-gray-200 rounded-xl pl-10 pr-4 py-2.5 text-xs text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#E8450A] focus:ring-2 focus:ring-[#E8450A]/20"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-slate-300 mb-1.5">Password</label>
+              <label className="block text-xs font-bold text-gray-700 mb-1.5">Password</label>
               <div className="relative">
-                <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                <Lock className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                 <input
                   type="password"
                   required
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full glass-input rounded-xl pl-10 pr-4 py-2.5 text-xs text-white placeholder-slate-600"
+                  className="w-full bg-white border border-gray-200 rounded-xl pl-10 pr-4 py-2.5 text-xs text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#E8450A] focus:ring-2 focus:ring-[#E8450A]/20"
                 />
               </div>
             </div>
@@ -117,7 +111,7 @@ export default function Login() {
             <button
               type="submit"
               disabled={loading || demoLoading}
-              className="w-full py-3 rounded-xl text-xs sm:text-sm font-bold text-white bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 shadow-glow transition-all duration-200 flex items-center justify-center space-x-2 disabled:opacity-50 mt-2"
+              className="w-full py-2.5 rounded-xl text-xs sm:text-sm font-bold text-white bg-[#E8450A] hover:bg-[#d03d08] shadow-sm transition-all duration-200 flex items-center justify-center space-x-2 disabled:opacity-50 mt-2"
             >
               <span>{loading ? 'Authenticating...' : 'Sign In'}</span>
               <ArrowRight className="w-4 h-4" />
@@ -127,10 +121,10 @@ export default function Login() {
           {/* Divider */}
           <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-slate-800" />
+              <div className="w-full border-t border-gray-100" />
             </div>
             <div className="relative flex justify-center text-[11px] uppercase font-bold">
-              <span className="bg-[#0f172a] px-3 text-slate-500">Or Explore Instantly</span>
+              <span className="bg-white px-3 text-gray-400">Or Explore Instantly</span>
             </div>
           </div>
 
@@ -139,16 +133,16 @@ export default function Login() {
             type="button"
             onClick={handleDemoLogin}
             disabled={loading || demoLoading}
-            className="w-full py-2.5 px-4 rounded-xl text-xs font-bold text-amber-300 bg-amber-500/10 border border-amber-500/30 hover:bg-amber-500/20 hover:border-amber-500/50 transition-all duration-200 flex items-center justify-center space-x-2"
+            className="w-full py-2.5 px-4 rounded-xl text-xs font-bold text-[#E8450A] bg-orange-50 border border-orange-200 hover:bg-orange-100 transition-all duration-200 flex items-center justify-center space-x-2"
           >
-            <Sparkles className="w-4 h-4 text-amber-400" />
+            <Sparkles className="w-4 h-4 text-[#E8450A]" />
             <span>{demoLoading ? 'Setting up demo...' : 'Try 1-Click Demo Account'}</span>
           </button>
 
           {/* Sign Up Link */}
-          <div className="mt-6 text-center text-xs text-slate-400">
+          <div className="mt-6 text-center text-xs text-gray-500">
             Don't have an account?{' '}
-            <Link to="/register" className="font-bold text-brand-400 hover:text-brand-300 transition-colors">
+            <Link to="/register" className="font-bold text-[#E8450A] hover:underline transition-colors">
               Create account
             </Link>
           </div>

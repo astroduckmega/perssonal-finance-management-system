@@ -7,7 +7,6 @@ import {
   CreditCard,
   Calendar,
   Sparkles,
-  Download,
 } from 'lucide-react';
 import {
   ResponsiveContainer,
@@ -25,24 +24,23 @@ import {
   Legend,
 } from 'recharts';
 import api from '../../api/axios';
-import { format, subDays, startOfYear, startOfMonth } from 'date-fns';
+import { format, subDays, startOfYear } from 'date-fns';
 
 const COLORS = [
-  '#8b5cf6',
+  '#E8450A',
+  '#1f2937',
   '#10b981',
   '#f59e0b',
-  '#ec4899',
   '#3b82f6',
   '#06b6d4',
-  '#ef4444',
+  '#ec4899',
   '#84cc16',
-  '#d946ef',
   '#64748b',
 ];
 
 export default function Reports() {
   const { formatCurrency, currentSymbol } = useCurrency();
-  const [timeframe, setTimeframe] = useState('30days'); // '30days' | '90days' | 'year' | 'all' | 'custom'
+  const [timeframe, setTimeframe] = useState('30days');
   const [startDate, setStartDate] = useState(format(subDays(new Date(), 30), 'yyyy-MM-dd'));
   const [endDate, setEndDate] = useState(format(new Date(), 'yyyy-MM-dd'));
 
@@ -92,7 +90,6 @@ export default function Reports() {
   const paymentMethodStats = reportData?.paymentMethodStats || [];
   const dailyStats = reportData?.dailyStats || [];
 
-  // Flatten daily stats for chart
   const dailyChartMap = {};
   dailyStats.forEach((item) => {
     const d = item._id.dateStr;
@@ -110,14 +107,14 @@ export default function Reports() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-black text-white tracking-tight">Financial Intelligence & Analytics</h1>
-          <p className="text-xs text-slate-400">
+          <h1 className="text-2xl font-bold text-gray-900 tracking-tight">Financial Intelligence & Analytics</h1>
+          <p className="text-xs text-gray-500">
             Deep-dive visual analytics of spending categories, income streams, and payment distribution.
           </p>
         </div>
 
         {/* Timeframe Presets */}
-        <div className="flex flex-wrap items-center gap-1.5 p-1 bg-slate-900 rounded-2xl border border-slate-800">
+        <div className="flex flex-wrap items-center gap-1 p-1 bg-gray-100 rounded-xl border border-gray-200">
           {[
             { id: '30days', label: 'Last 30 Days' },
             { id: '90days', label: 'Last 90 Days' },
@@ -127,10 +124,10 @@ export default function Reports() {
             <button
               key={item.id}
               onClick={() => handleTimeframeChange(item.id)}
-              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
                 timeframe === item.id
-                  ? 'bg-brand-600 text-white shadow-glow'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-[#E8450A] text-white shadow-xs'
+                  : 'text-gray-600 hover:text-gray-900'
               }`}
             >
               {item.label}
@@ -140,10 +137,10 @@ export default function Reports() {
       </div>
 
       {/* Date Range Selector */}
-      <div className="glass-panel rounded-2xl p-4 border border-slate-800 flex flex-wrap items-center justify-between gap-4 text-xs">
+      <div className="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm flex flex-wrap items-center justify-between gap-4 text-xs">
         <div className="flex items-center space-x-2">
-          <Calendar className="w-4 h-4 text-brand-400" />
-          <span className="text-slate-300 font-bold">Custom Analysis Range:</span>
+          <Calendar className="w-4 h-4 text-[#E8450A]" />
+          <span className="text-gray-700 font-bold">Custom Analysis Range:</span>
           <input
             type="date"
             value={startDate}
@@ -151,9 +148,9 @@ export default function Reports() {
               setTimeframe('custom');
               setStartDate(e.target.value);
             }}
-            className="glass-input rounded-lg px-2.5 py-1 text-xs text-white"
+            className="bg-gray-50 border border-gray-200 rounded-lg px-2.5 py-1 text-xs text-gray-800 focus:outline-none focus:border-[#E8450A]"
           />
-          <span className="text-slate-500">to</span>
+          <span className="text-gray-400">to</span>
           <input
             type="date"
             value={endDate}
@@ -161,24 +158,24 @@ export default function Reports() {
               setTimeframe('custom');
               setEndDate(e.target.value);
             }}
-            className="glass-input rounded-lg px-2.5 py-1 text-xs text-white"
+            className="bg-gray-50 border border-gray-200 rounded-lg px-2.5 py-1 text-xs text-gray-800 focus:outline-none focus:border-[#E8450A]"
           />
         </div>
 
         <div className="flex items-center space-x-4">
           <div>
-            <span className="text-slate-400">Period Income: </span>
-            <strong className="text-emerald-400">{formatCurrency(totalIncomePeriod)}</strong>
+            <span className="text-gray-400">Period Income: </span>
+            <strong className="text-emerald-600 font-bold">{formatCurrency(totalIncomePeriod)}</strong>
           </div>
           <div>
-            <span className="text-slate-400">Period Expenses: </span>
-            <strong className="text-rose-400">{formatCurrency(totalExpensePeriod)}</strong>
+            <span className="text-gray-400">Period Expenses: </span>
+            <strong className="text-red-600 font-bold">{formatCurrency(totalExpensePeriod)}</strong>
           </div>
         </div>
       </div>
 
       {loading ? (
-        <div className="p-16 text-center text-xs font-semibold text-slate-400 animate-pulse">
+        <div className="p-16 text-center text-xs font-semibold text-gray-400 animate-pulse">
           Aggregating financial data...
         </div>
       ) : (
@@ -186,20 +183,20 @@ export default function Reports() {
           {/* Charts Row 1: Category Breakdown & Income Breakdown */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Expense Category Breakdown Donut */}
-            <div className="glass-panel rounded-3xl p-6 border border-slate-800 flex flex-col justify-between">
+            <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm flex flex-col justify-between">
               <div className="flex items-center justify-between mb-4">
                 <div>
-                  <h3 className="text-base font-bold text-white tracking-wide">
+                  <h3 className="text-base font-bold text-gray-900 tracking-wide">
                     Expense Distribution by Category
                   </h3>
-                  <p className="text-xs text-slate-400">Where your money went in this period</p>
+                  <p className="text-xs text-gray-400">Where your money went in this period</p>
                 </div>
-                <PieIcon className="w-5 h-5 text-brand-400" />
+                <PieIcon className="w-5 h-5 text-[#E8450A]" />
               </div>
 
               <div className="h-64 w-full">
                 {categoryBreakdown.length === 0 ? (
-                  <div className="h-full flex items-center justify-center text-xs text-slate-500">
+                  <div className="h-full flex items-center justify-center text-xs text-gray-400">
                     No expense data found for this period.
                   </div>
                 ) : (
@@ -211,8 +208,8 @@ export default function Reports() {
                         nameKey="_id"
                         cx="50%"
                         cy="50%"
-                        innerRadius={60}
-                        outerRadius={95}
+                        innerRadius={55}
+                        outerRadius={85}
                         paddingAngle={3}
                       >
                         {categoryBreakdown.map((entry, index) => (
@@ -221,10 +218,12 @@ export default function Reports() {
                       </Pie>
                       <Tooltip
                         contentStyle={{
-                          backgroundColor: '#0f172a',
-                          borderColor: '#334155',
+                          backgroundColor: '#ffffff',
+                          borderColor: '#f3f4f6',
                           borderRadius: '12px',
-                          fontSize: '12px',
+                          fontSize: '11px',
+                          boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+                          color: '#1f2937',
                         }}
                         formatter={(val) => [formatCurrency(val), 'Spent']}
                       />
@@ -238,18 +237,18 @@ export default function Reports() {
                 {categoryBreakdown.map((c, idx) => {
                   const pct = totalExpensePeriod > 0 ? Math.round((c.total / totalExpensePeriod) * 100) : 0;
                   return (
-                    <div key={c._id} className="flex items-center justify-between text-xs py-1 border-b border-slate-800/60 last:border-none">
+                    <div key={c._id} className="flex items-center justify-between text-xs py-1 border-b border-gray-100 last:border-none">
                       <div className="flex items-center space-x-2">
                         <div
                           className="w-2.5 h-2.5 rounded-full shrink-0"
                           style={{ backgroundColor: COLORS[idx % COLORS.length] }}
                         />
-                        <span className="text-slate-300 font-medium">{c._id}</span>
-                        <span className="text-[10px] text-slate-500">({c.count} items)</span>
+                        <span className="text-gray-700 font-medium">{c._id}</span>
+                        <span className="text-[10px] text-gray-400">({c.count} items)</span>
                       </div>
                       <div className="text-right">
-                        <span className="font-bold text-white">{formatCurrency(c.total)}</span>
-                        <span className="text-[10px] text-slate-400 ml-2 font-mono">{pct}%</span>
+                        <span className="font-bold text-gray-900">{formatCurrency(c.total)}</span>
+                        <span className="text-[10px] text-gray-400 ml-2 font-mono">{pct}%</span>
                       </div>
                     </div>
                   );
@@ -258,43 +257,45 @@ export default function Reports() {
             </div>
 
             {/* Income Streams Breakdown */}
-            <div className="glass-panel rounded-3xl p-6 border border-slate-800 flex flex-col justify-between">
+            <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm flex flex-col justify-between">
               <div className="flex items-center justify-between mb-4">
                 <div>
-                  <h3 className="text-base font-bold text-white tracking-wide">
+                  <h3 className="text-base font-bold text-gray-900 tracking-wide">
                     Income Streams Breakdown
                   </h3>
-                  <p className="text-xs text-slate-400">Total earned across revenue categories</p>
+                  <p className="text-xs text-gray-400">Total earned across revenue categories</p>
                 </div>
-                <TrendingUp className="w-5 h-5 text-emerald-400" />
+                <TrendingUp className="w-5 h-5 text-emerald-500" />
               </div>
 
               <div className="h-64 w-full">
                 {incomeBreakdown.length === 0 ? (
-                  <div className="h-full flex items-center justify-center text-xs text-slate-500">
+                  <div className="h-full flex items-center justify-center text-xs text-gray-400">
                     No income records found for this period.
                   </div>
                 ) : (
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={incomeBreakdown} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                      <XAxis dataKey="_id" stroke="#64748b" fontSize={10} tickLine={false} />
+                      <CartesianGrid strokeDasharray="2 2" stroke="#f3f4f6" vertical={false} />
+                      <XAxis dataKey="_id" stroke="#9ca3af" fontSize={10} tickLine={false} />
                       <YAxis
-                        stroke="#64748b"
-                        fontSize={11}
+                        stroke="#9ca3af"
+                        fontSize={10}
                         tickLine={false}
-                        tickFormatter={(val) => `${currentSymbol}${val >= 1000 ? (val/1000).toFixed(0) + 'k' : val}`}
+                        tickFormatter={(val) => `${currentSymbol}${val >= 1000 ? (val / 1000).toFixed(0) + 'k' : val}`}
                       />
                       <Tooltip
                         contentStyle={{
-                          backgroundColor: '#0f172a',
-                          borderColor: '#334155',
+                          backgroundColor: '#ffffff',
+                          borderColor: '#f3f4f6',
                           borderRadius: '12px',
-                          fontSize: '12px',
+                          fontSize: '11px',
+                          boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+                          color: '#1f2937',
                         }}
                         formatter={(val) => [formatCurrency(val), 'Earned']}
                       />
-                      <Bar dataKey="total" name="Income" fill="#10b981" radius={[6, 6, 0, 0]} />
+                      <Bar dataKey="total" name="Income" fill="#E8450A" radius={[6, 6, 0, 0]} />
                     </BarChart>
                   </ResponsiveContainer>
                 )}
@@ -302,57 +303,59 @@ export default function Reports() {
 
               <div className="space-y-2 mt-4 max-h-44 overflow-y-auto pr-1">
                 {incomeBreakdown.map((c) => (
-                  <div key={c._id} className="flex items-center justify-between text-xs py-1 border-b border-slate-800/60 last:border-none">
-                    <span className="text-slate-300 font-medium">{c._id}</span>
-                    <span className="font-bold text-emerald-400">{formatCurrency(c.total)}</span>
+                  <div key={c._id} className="flex items-center justify-between text-xs py-1 border-b border-gray-100 last:border-none">
+                    <span className="text-gray-700 font-medium">{c._id}</span>
+                    <span className="font-bold text-emerald-600">{formatCurrency(c.total)}</span>
                   </div>
                 ))}
               </div>
             </div>
           </div>
 
-          {/* Charts Row 2: Daily Cash Flow Timeline & Payment Methods */}
+          {/* Charts Row 2: Daily Cash Flow Timeline & Payment Channels */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Daily Timeline (2 columns) */}
-            <div className="lg:col-span-2 glass-panel rounded-3xl p-6 border border-slate-800">
+            <div className="lg:col-span-2 bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
               <div className="flex items-center justify-between mb-4">
                 <div>
-                  <h3 className="text-base font-bold text-white tracking-wide">
+                  <h3 className="text-base font-bold text-gray-900 tracking-wide">
                     Daily Cash Flow Timeline
                   </h3>
-                  <p className="text-xs text-slate-400">Day-by-day income and expense spikes</p>
+                  <p className="text-xs text-gray-400">Day-by-day income and expense spikes</p>
                 </div>
-                <BarChart3 className="w-5 h-5 text-brand-400" />
+                <BarChart3 className="w-5 h-5 text-[#E8450A]" />
               </div>
 
               <div className="h-64 w-full">
                 {dailyChartData.length === 0 ? (
-                  <div className="h-full flex items-center justify-center text-xs text-slate-500">
+                  <div className="h-full flex items-center justify-center text-xs text-gray-400">
                     No timeline points recorded in this range.
                   </div>
                 ) : (
                   <ResponsiveContainer width="100%" height="100%">
                     <LineChart data={dailyChartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                      <XAxis dataKey="date" stroke="#64748b" fontSize={10} tickLine={false} />
+                      <CartesianGrid strokeDasharray="2 2" stroke="#f3f4f6" vertical={false} />
+                      <XAxis dataKey="date" stroke="#9ca3af" fontSize={10} tickLine={false} />
                       <YAxis
-                        stroke="#64748b"
-                        fontSize={11}
+                        stroke="#9ca3af"
+                        fontSize={10}
                         tickLine={false}
-                        tickFormatter={(val) => `${currentSymbol}${val >= 1000 ? (val/1000).toFixed(0) + 'k' : val}`}
+                        tickFormatter={(val) => `${currentSymbol}${val >= 1000 ? (val / 1000).toFixed(0) + 'k' : val}`}
                       />
                       <Tooltip
                         contentStyle={{
-                          backgroundColor: '#0f172a',
-                          borderColor: '#334155',
+                          backgroundColor: '#ffffff',
+                          borderColor: '#f3f4f6',
                           borderRadius: '12px',
-                          fontSize: '12px',
+                          fontSize: '11px',
+                          boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+                          color: '#1f2937',
                         }}
                         formatter={(val) => [formatCurrency(val), '']}
                       />
-                      <Legend wrapperStyle={{ fontSize: '12px' }} />
-                      <Line type="monotone" dataKey="income" name="Income" stroke="#10b981" strokeWidth={2} dot={false} />
-                      <Line type="monotone" dataKey="expense" name="Expense" stroke="#f43f5e" strokeWidth={2} dot={false} />
+                      <Legend wrapperStyle={{ fontSize: '11px', paddingTop: '8px' }} />
+                      <Line type="monotone" dataKey="income" name="Income" stroke="#E8450A" strokeWidth={2} dot={false} />
+                      <Line type="monotone" dataKey="expense" name="Expense" stroke="#1f2937" strokeWidth={2} dot={false} />
                     </LineChart>
                   </ResponsiveContainer>
                 )}
@@ -360,26 +363,26 @@ export default function Reports() {
             </div>
 
             {/* Payment Method Distribution (1 column) */}
-            <div className="glass-panel rounded-3xl p-6 border border-slate-800 flex flex-col justify-between">
+            <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-between mb-4">
                   <div>
-                    <h3 className="text-base font-bold text-white tracking-wide">
+                    <h3 className="text-base font-bold text-gray-900 tracking-wide">
                       Payment Channels
                     </h3>
-                    <p className="text-xs text-slate-400">UPI, Cards, Cash shares</p>
+                    <p className="text-xs text-gray-400">UPI, Cards, Cash shares</p>
                   </div>
-                  <CreditCard className="w-5 h-5 text-amber-400" />
+                  <CreditCard className="w-5 h-5 text-amber-500" />
                 </div>
 
                 <div className="space-y-3 mt-4">
-                  {paymentMethodStats.map((p, idx) => (
-                    <div key={p._id} className="p-3 rounded-2xl bg-slate-900/60 border border-slate-800">
+                  {paymentMethodStats.map((p) => (
+                    <div key={p._id} className="p-3 rounded-xl bg-gray-50 border border-gray-100">
                       <div className="flex items-center justify-between text-xs font-bold mb-1">
-                        <span className="text-white">{p._id}</span>
-                        <span className="text-slate-300">{formatCurrency(p.total)}</span>
+                        <span className="text-gray-900">{p._id}</span>
+                        <span className="text-gray-700">{formatCurrency(p.total)}</span>
                       </div>
-                      <div className="text-[11px] text-slate-500">
+                      <div className="text-[11px] text-gray-400">
                         {p.count} transactions recorded
                       </div>
                     </div>
@@ -388,8 +391,8 @@ export default function Reports() {
               </div>
 
               {/* Smart Takeaway Note */}
-              <div className="p-3.5 mt-4 rounded-2xl bg-brand-950/40 border border-brand-500/20 text-xs text-brand-300 leading-relaxed">
-                💡 <strong>Optimization Insight:</strong> Regularly tracking payment channels helps identify subscription leaks and credit card reward opportunities.
+              <div className="p-3.5 mt-4 rounded-xl bg-orange-50 border border-orange-100 text-xs text-gray-700 leading-relaxed">
+                💡 <strong className="text-[#E8450A]">Insight:</strong> Regularly tracking payment channels helps identify recurring subscription leaks and cash flow patterns.
               </div>
             </div>
           </div>
