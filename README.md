@@ -154,7 +154,7 @@ npm run dev
 
 The backend `.env` is configured with your MongoDB Atlas Cluster:
 ```env
-PORT=5000
-MONGODB_URI=mongodb+srv://praveensai3333_db_user:DuJJueAVxsJ42Jiv@cluster0.7m7ss7v.mongodb.net/personal_finance?retryWrites=true&w=majority
-JWT_SECRET=finance_app_jwt_secret_token_secure_2026_xyz
+PORT=
+MONGODB_URI=
+JWT_SECRET=
 ```
