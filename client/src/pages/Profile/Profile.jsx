@@ -5,7 +5,6 @@ import {
   User,
   Mail,
   DollarSign,
-  Database,
   Sparkles,
   CheckCircle2,
   AlertTriangle,
@@ -179,31 +178,6 @@ export default function Profile() {
               </button>
             </div>
           </form>
-        </div>
-      </div>
-
-      {/* MongoDB Atlas Connection Status Banner */}
-      <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm space-y-3">
-        <div className="flex items-center space-x-2 text-emerald-600">
-          <Database className="w-5 h-5" />
-          <h3 className="text-sm font-bold uppercase tracking-wider">Database Connection Status</h3>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
-          <div className="p-3 rounded-xl bg-gray-50 border border-gray-100">
-            <span className="text-gray-400 block mb-1">Cluster</span>
-            <strong className="text-gray-800 font-mono">cluster0.7m7ss7v.mongodb.net</strong>
-          </div>
-          <div className="p-3 rounded-xl bg-gray-50 border border-gray-100">
-            <span className="text-gray-400 block mb-1">Database</span>
-            <strong className="text-gray-800 font-mono">personal_finance</strong>
-          </div>
-          <div className="p-3 rounded-xl bg-gray-50 border border-gray-100">
-            <span className="text-gray-400 block mb-1">Status</span>
-            <strong className="text-emerald-600 flex items-center font-bold">
-              <CheckCircle2 className="w-3.5 h-3.5 mr-1" /> Connected & Active
-            </strong>
-          </div>
         </div>
       </div>
 
